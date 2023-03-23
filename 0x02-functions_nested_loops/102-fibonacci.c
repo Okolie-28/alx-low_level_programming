@@ -3,10 +3,8 @@
 /**
  * main - Entry point
  *
- * Description: prints the first 50 Fibonacci numb
-ers
- *              starting with 1 and 2 folled by a
-new line
+ * Description: prints the first 50 Fibonacci number starting with 1
+ *              starting with 1 and 2 folled by a new line
  *
  * Return: Always 0 (Success)
 */
@@ -19,7 +17,7 @@ int main(void)
 	for (count = 0; count < 50; ++count)
 	{
 		sum = fib1 + fib2;
- 		printf("%lu", sum);
+		printf("%lu," sum);
 
 		fib1 = fib2;
 		fib2 = sum;
