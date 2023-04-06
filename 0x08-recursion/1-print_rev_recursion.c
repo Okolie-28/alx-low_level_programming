@@ -3,7 +3,18 @@
 /**
  *_print_rev_recursion - A function that prints a string in reverse
  *@s: a pointer to the string
- *return: nothing
+ *Return: nothing
  */
 
 void _print_rev_recursion(char *s)
+{
+if (s == '\0')
+{
+return;
+}
+ else
+{
+_print_rev_recursion(s + 1)
+_putchar(*s)
+}
+}
