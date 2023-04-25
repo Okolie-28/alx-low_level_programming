@@ -1,8 +1,7 @@
 #include <stdlib.h>
 
 /**
- *argstostr - a function that concatenates all
- arguments of a program
+ *argstostr - a function that concatenates all arguments of a program
  *
  *@ac: argument counter
  *@av: argument holder

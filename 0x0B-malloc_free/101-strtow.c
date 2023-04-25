@@ -1,78 +1,97 @@
 #include <stdlib.h>
-#include "holberton.h"
 
 /**
- * count_word - a helper function to count the number of words in a string
- * @s: string to be evaluated
+ *word_count - get word count from string without spaces
  *
- * Return: number of words
- */
-int count_word(char *s)
+ *@str: string that counts the number of words present
+ *
+ *Return: return the number of words
+*/
+
+int word_count(char *str)
 {
-	int flag, c, w;
+	int words = 0;
 
-	flag = 0;
-	w = 0;
-
-	for (c = 0; s[c] != '\0'; c++)
+	while (*str != '\0')
 	{
-		if (s[c] == ' ')
-			flag = 0;
-		else if (flag == 0)
+		/* skip spaces if any*/
+		if (*str == ' ')
+			str++;
+		else
 		{
-flag = 1;
-			w++;
+			/* count the number of words */
+			while (*str != ' ' && *str != '\0')
+				str++;
+			words++;
 		}
 	}
-
-	return (w);
+	return (words);
 }
+
 /**
- * **strtow - splits a string into words
- * @str: string to split
+ * free_array - function to free an array
  *
- * Return: pointer to an array of strings (Success)
- * or NULL (Error)
- */
+ * @ar: the array to be free'd
+ * @i: the array[i]
+ *
+ * Return: return nothing
+*/
+
+void free_array(char **ar, int i)
+{
+	if (ar != NULL && i != 0)
+	{
+		while (i >= 0)
+		{
+			free(ar[i]);
+			i--;
+		}
+		free(ar);
+	}
+}
+
+/**
+ * strtow - a function that splits a string into words
+ *
+ * @str: the input string to split
+ *
+ * Return: return a null value or a string
+*/
+
 char **strtow(char *str)
 {
-	char **matrix, *tmp;
-	int i, k = 0, len = 0, words, c = 0, start, end;
+	int i, s, j, length, word;
+	char **string;
 
-	while (*(str + len))
-		len++;
-	words = count_word(str);
-	if (words == 0)
+	if (str == NULL || *str == '\0')
 		return (NULL);
+	length = word_count(str);
 
-	matrix = (char **) malloc(sizeof(char *) * (words + 1));
-	if (matrix == NULL)
+	/* return null if length == 0 or string == NULL */
+	string = malloc((length + 1) * sizeof(char *));
+	if (length == 0 || string == NULL)
 		return (NULL);
-
-	for (i = 0; i <= len; i++)
+	for (i = s = 0; i < length; i++)
 	{
-		if (str[i] == ' ' || str[i] == '\0')
+		for (word = s; str[word] != '\0'; word++)
 		{
-			if (c)
+			if (str[word] == ' ')
+				s++;
+			if (str[word] != ' ' && (str[word + 1] == ' ' || str[word + 1] == '\0'))
 			{
-				end = i;
-				tmp = (char *) malloc(sizeof(char) * (c + 1));
-				if (tmp == NULL)
+				string[i] = malloc((word - s + 2) * sizeof(char));
+				if (string[i] == NULL)
+				{
+					free_array(string, i);
 					return (NULL);
-
-				while (start < end)
-				*tmp++ = str[start++];
-				*tmp = '\0';
-				matrix[k] = tmp - c;
-				k++;
-				c = 0;
+				}
+				break;
 			}
 		}
-		else if (c++ == 0)
-			start = i;
+		for (j = 0; s <= word; s++, j++)
+			string[i][j] = str[s];
+		string[i][j] = '\0';
 	}
-
-	matrix[k] = NULL;
-
-	return (matrix);
+	string[i] = NULL;
+	return (string);
 }
