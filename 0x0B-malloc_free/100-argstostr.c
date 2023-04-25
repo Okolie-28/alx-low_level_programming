@@ -2,7 +2,7 @@
 
 /**
  *argstostr - a function that concatenates all
- arguments of a program
+ * arguments of a program
  *
  *@ac: argument counter
  *@av: argument holder
